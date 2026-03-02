@@ -148,6 +148,64 @@ export function Home() {
         </div>
       </section>
 
+      {/* Featured Products Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-end mb-12">
+          <div>
+            <h2 className="section-title mb-4">Featured Products</h2>
+            <p className="text-stone-600">Our most popular value-added onion solutions.</p>
+          </div>
+          <Link to="/products" className="text-onion-green font-bold flex items-center gap-2 hover:underline">
+            View All <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              id: "onion-powder-250",
+              name: "Premium Onion Powder",
+              price: 350,
+              image: "https://images.unsplash.com/photo-1618376168161-66d8c35ad2c9?auto=format&fit=crop&q=80&w=800",
+              category: "Food"
+            },
+            {
+              id: "onion-oil-100",
+              name: "Pure Onion Seed Oil",
+              price: 450,
+              image: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&q=80&w=800",
+              category: "Cosmetic"
+            },
+            {
+              id: "onion-seed-tea-100",
+              name: "Wellness Tea",
+              price: 280,
+              image: "https://images.unsplash.com/photo-1594631252845-29fc45865157?auto=format&fit=crop&q=80&w=800",
+              category: "Herbal"
+            }
+          ].map((product) => (
+            <motion.div
+              key={product.id}
+              whileHover={{ y: -10 }}
+              className="bg-white rounded-3xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-xl transition-all duration-300"
+            >
+              <Link to={`/products/${product.id}`} className="block aspect-square overflow-hidden">
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              </Link>
+              <div className="p-6">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-onion-green mb-2 block">{product.category}</span>
+                <h3 className="font-bold text-onion-brown mb-2">{product.name}</h3>
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-onion-green">₹{product.price}</span>
+                  <Link to={`/products/${product.id}`} className="text-xs font-bold text-stone-400 hover:text-onion-green transition-colors">
+                    Details
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* Stats/Impact Preview */}
       <section className="bg-onion-brown py-24 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

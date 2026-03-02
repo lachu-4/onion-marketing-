@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { Leaf, Menu, X } from "lucide-react";
+import { Leaf, Menu, X, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useCart } from "../context/CartContext";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,6 +22,7 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { totalItems } = useCart();
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-onion-green/10">
@@ -51,18 +53,38 @@ export function Navbar() {
                 {link.name}
               </Link>
             ))}
+            
+            <Link to="/cart" className="relative p-2 text-stone-600 hover:text-onion-green transition-colors">
+              <ShoppingCart className="w-6 h-6" />
+              {totalItems > 0 && (
+                <span className="absolute top-0 right-0 bg-onion-green text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+
             <Link to="/contact" className="btn-primary py-2 px-5 text-sm">
               Get Started
             </Link>
           </div>
 
           {/* Mobile Toggle */}
-          <button
-            className="md:hidden p-2 text-stone-600"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X /> : <Menu />}
-          </button>
+          <div className="flex items-center gap-4 md:hidden">
+            <Link to="/cart" className="relative p-2 text-stone-600">
+              <ShoppingCart className="w-6 h-6" />
+              {totalItems > 0 && (
+                <span className="absolute top-0 right-0 bg-onion-green text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+            <button
+              className="p-2 text-stone-600"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X /> : <Menu />}
+            </button>
+          </div>
         </div>
       </div>
 
